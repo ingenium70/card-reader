@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>명함 리더기</title>
+  <meta name="theme-color" content="#0a84ff" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="명함 리더기" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>명함 리더기</h1>
+    <p class="subtitle">명함을 촬영하면 연락처로 저장해 드려요</p>
+  </header>
+
+  <main class="container">
+    <section class="capture-card">
+      <div class="preview-wrap" id="previewWrap" hidden>
+        <img id="preview" alt="명함 미리보기" />
+      </div>
+
+      <div class="capture-buttons">
+        <label class="btn btn-primary" for="cameraInput">
+          📷 명함 촬영
+          <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden />
+        </label>
+        <label class="btn btn-secondary" for="galleryInput">
+          🖼️ 사진에서 선택
+          <input id="galleryInput" type="file" accept="image/*" hidden />
+        </label>
+      </div>
+
+      <div class="progress" id="progress" hidden>
+        <div class="progress-bar"><span id="progressBar"></span></div>
+        <p class="progress-label" id="progressLabel">인식 준비 중…</p>
+      </div>
+
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="result-card" id="resultCard" hidden>
+      <h2>인식 결과 <small>(수정할 수 있어요)</small></h2>
+      <form id="cardForm" novalidate>
+        <label class="field">
+          <span>이름</span>
+          <input type="text" id="f_name" autocomplete="name" />
+        </label>
+        <label class="field">
+          <span>회사</span>
+          <input type="text" id="f_org" autocomplete="organization" />
+        </label>
+        <label class="field">
+          <span>직책</span>
+          <input type="text" id="f_title" autocomplete="organization-title" />
+        </label>
+        <label class="field">
+          <span>휴대전화</span>
+          <input type="tel" id="f_mobile" inputmode="tel" autocomplete="tel" />
+        </label>
+        <label class="field">
+          <span>전화 (유선)</span>
+          <input type="tel" id="f_phone" inputmode="tel" />
+        </label>
+        <label class="field">
+          <span>이메일</span>
+          <input type="email" id="f_email" inputmode="email" autocomplete="email" />
+        </label>
+        <label class="field">
+          <span>웹사이트</span>
+          <input type="url" id="f_url" inputmode="url" />
+        </label>
+        <label class="field">
+          <span>주소</span>
+          <input type="text" id="f_addr" autocomplete="street-address" />
+        </label>
+
+        <button type="button" class="btn btn-save" id="saveBtn">📇 연락처로 저장</button>
+      </form>
+
+      <details class="raw">
+        <summary>인식된 원본 텍스트 보기</summary>
+        <pre id="rawText"></pre>
+      </details>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <span id="netState"></span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
